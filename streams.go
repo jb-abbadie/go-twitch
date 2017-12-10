@@ -33,7 +33,7 @@ type GetStreamInput struct {
 	UserLogin   string `url:"user_login,omitempty"`
 }
 
-func (s *Session) GetStream(input *GetStreamInput) (*StreamList, error) {
+func (s Session) GetStream(input *GetStreamInput) (*StreamList, error) {
 	var out StreamList
 	err := s.doRequest("/streams", input, &out)
 	if err != nil {

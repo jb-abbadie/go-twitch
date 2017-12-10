@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+type TwitchInterface interface {
+	GetStream(input *GetStreamInput) (*StreamList, error)
+}
+
 type Session struct {
 	BaseURL  string
 	ClientID string
