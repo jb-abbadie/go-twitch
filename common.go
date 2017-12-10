@@ -9,7 +9,7 @@ import (
 )
 
 type TwitchInterface interface {
-	GetStream(input *GetStreamInput) (*StreamList, error)
+	GetStream(input GetStreamInput) (StreamList, error)
 }
 
 type Session struct {

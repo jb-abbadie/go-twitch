@@ -22,7 +22,7 @@ func TestGetStreamsOptions(t *testing.T) {
 	input := GetStreamInput{}
 	input.After = "125"
 
-	_, err := testSession.GetStream(&input)
+	_, err := testSession.GetStream(input)
 	if err != nil {
 		t.Error("error parsing stream", err)
 	}
@@ -37,7 +37,7 @@ func TestGetStreamsHTTPrequest(t *testing.T) {
 
 	defer ts.Close()
 	testSession := Session{ts.URL, ""}
-	_, err := testSession.GetStream(nil)
+	_, err := testSession.GetStream(GetStreamInput{})
 	if err != nil {
 		t.Error("error parsing stream", err)
 	}
@@ -68,9 +68,9 @@ func TestGetStreamsParseJSON(t *testing.T) {
 	defer ts.Close()
 
 	testSession := Session{ts.URL, ""}
-	data, err := testSession.GetStream(nil)
+	data, err := testSession.GetStream(GetStreamInput{})
 	if err != nil {
 		t.Error("error parsing stream")
 	}
-	assert.Equal(t, *data, fakeStream)
+	assert.Equal(t, data, fakeStream)
 }
