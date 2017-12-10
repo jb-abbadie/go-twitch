@@ -4,5 +4,7 @@ import (
 	"testing"
 )
 
-func TestDebug(t *testing.T) {
+func TestImplementInterface(t *testing.T) {
+	var twitch TwitchInterface = (*Session)(nil)
+	t.Log(twitch)
 }
