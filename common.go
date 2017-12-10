@@ -2,10 +2,12 @@ package twitch
 
 import (
 	"encoding/json"
-	"github.com/google/go-querystring/query"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/google/go-querystring/query"
 )
 
 type TwitchInterface interface {
@@ -25,15 +27,30 @@ func NewSession() Session {
 func (s *Session) doRequest(path string, q interface{}, r interface{}) error {
 
 	client := new(http.Client)
-	reqURL, _ := buildURL(s.BaseURL, path, q)
-	req, _ := http.NewRequest("GET", reqURL, nil)
+	reqURL, err := buildURL(s.BaseURL, path, q)
+	if err != nil {
+		return err
+	}
+	req, err := http.NewRequest("GET", reqURL, nil)
+	if err != nil {
+		return err
+	}
 
 	req.Header.Add("Client-ID", s.ClientID)
 
-	resp, _ := client.Do(req)
-	out, _ := ioutil.ReadAll(resp.Body)
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != 200 {
+		return errors.New("Failed request " + resp.Status)
+	}
+	out, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 
-	err := json.Unmarshal(out, &r)
+	err = json.Unmarshal(out, &r)
 	return err
 }
 
