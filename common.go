@@ -14,11 +14,13 @@ type TwitchInterface interface {
 	GetStream(input GetStreamInput) (StreamList, error)
 }
 
+// Session is a base struct for calling the other functions
 type Session struct {
 	BaseURL  string
 	ClientID string
 }
 
+// NewSession creates a new Twitch Session
 func NewSession() Session {
 	client_id := os.Getenv("CLIENT_ID")
 	return Session{"https://api.twitch.tv/helix", client_id}

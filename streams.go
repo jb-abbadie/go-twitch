@@ -33,6 +33,8 @@ type GetStreamInput struct {
 	UserLogin   string `url:"user_login,omitempty"`
 }
 
+// Returns a list of Streams
+// reference https://dev.twitch.tv/docs/api/reference#get-streams
 func (s Session) GetStream(input GetStreamInput) (StreamList, error) {
 	var out StreamList
 	err := s.doRequest("/streams", &input, &out)
