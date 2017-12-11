@@ -45,17 +45,7 @@ func TestGetStreamsHTTPrequest(t *testing.T) {
 
 func TestGetStreamsParseJSON(t *testing.T) {
 	fakeStream := StreamList{
-		[]Stream{{
-			"26901632320",
-			"20786541",
-			"488191",
-			[]string{},
-			"live",
-			"HatFilms make an entire album!",
-			41971,
-			time.Time{},
-			"en",
-			"https://static-cdn.jtvnw.net/previews-ttv/live_user_yogscast-{width}x{height}.jpg"}}}
+		[]Stream{{"26901632320", "20786541", "488191", []string{}, "live", "HatFilms make an entire album!", 41971, time.Time{}, "en", "https://static-cdn.jtvnw.net/previews-ttv/live_user_yogscast-{width}x{height}.jpg"}}}
 	fakeJSON, err := json.Marshal(fakeStream)
 	if err != nil {
 		t.Fatal("error creating json")
