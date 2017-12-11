@@ -44,7 +44,6 @@ func TestGetStreamsHTTPrequest(t *testing.T) {
 }
 
 func TestGetStreamsParseJSON(t *testing.T) {
-	//fakeTime, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 3, 2013 at 7:54pm (UTC)")
 	fakeStream := StreamList{
 		[]Stream{{
 			"26901632320",
