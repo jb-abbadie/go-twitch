@@ -16,6 +16,7 @@ func TestGetHLSAccessToken(t *testing.T) {
 		assert.Equal(t, r.Header.Get("Client-ID"), "foobar")
 		fmt.Fprintln(w, "{}")
 	}))
+	defer ts.Close()
 
 	testSession := Session{ClientID: "foobar"}
 	testSession.getHLSAccessToken("twitch", ts.URL+"/")
@@ -26,6 +27,7 @@ func TestGetChannelM3UPlaylist(t *testing.T) {
 		assert.Contains(t, r.RequestURI, "/twitch.m3u8")
 		fmt.Fprintln(w, "{}")
 	}))
+	defer ts.Close()
 
 	getChannelM3U8Playlist("twitch", accessToken{}, ts.URL+"/")
 }
