@@ -6,9 +6,9 @@ import (
 )
 
 func TestNewSession(t *testing.T) {
-	old_env := os.Getenv("CLIENT_ID")
+	oldEnv := os.Getenv("CLIENT_ID")
 	os.Setenv("CLIENT_ID", "foobar")
-	defer os.Setenv("CLIENT_ID", old_env)
+	defer os.Setenv("CLIENT_ID", oldEnv)
 
 	s := NewSession()
 	if s.ClientID != "foobar" {

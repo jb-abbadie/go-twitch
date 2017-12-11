@@ -22,8 +22,8 @@ type Session struct {
 
 // NewSession creates a new Twitch Session
 func NewSession() Session {
-	client_id := os.Getenv("CLIENT_ID")
-	return Session{"https://api.twitch.tv/helix", client_id}
+	clientID := os.Getenv("CLIENT_ID")
+	return Session{"https://api.twitch.tv/helix", clientID}
 }
 
 func (s *Session) doRequest(path string, q interface{}, r interface{}) error {
