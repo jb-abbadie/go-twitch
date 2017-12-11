@@ -56,13 +56,13 @@ func TestGetStreamsParseJSON(t *testing.T) {
 			time.Time{},
 			"en",
 			"https://static-cdn.jtvnw.net/previews-ttv/live_user_yogscast-{width}x{height}.jpg"}}}
-	fakeJson, err := json.Marshal(fakeStream)
+	fakeJSON, err := json.Marshal(fakeStream)
 	if err != nil {
 		t.Fatal("error creating json")
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, string(fakeJson))
+		fmt.Fprintln(w, string(fakeJSON))
 	}))
 	defer ts.Close()
 
