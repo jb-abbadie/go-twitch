@@ -12,6 +12,10 @@ import (
 	"github.com/grafov/m3u8"
 )
 
+type StreamExtracter interface {
+	ExtractStreamUrl(name string) ([]HLSStream, error)
+}
+
 func (s Session) ExtractStreamUrl(name string) ([]HLSStream, error) {
 
 	data, _ := s.getHLSAccessToken(name, "https://api.twitch.tv/api/channels/")

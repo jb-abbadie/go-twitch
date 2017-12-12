@@ -18,6 +18,6 @@ func TestNewSession(t *testing.T) {
 }
 
 func TestImplementInterface(t *testing.T) {
-	var twitch TwitchInterface = (*Session)(nil)
+	var twitch Interface = (*Session)(nil)
 	t.Log(twitch)
 }

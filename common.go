@@ -10,8 +10,9 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
-type TwitchInterface interface {
-	GetStream(input GetStreamInput) (StreamList, error)
+type Interface interface {
+	GetStreamer
+	StreamExtracter
 }
 
 // Session is a base struct for calling the other functions
