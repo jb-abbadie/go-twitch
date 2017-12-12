@@ -12,10 +12,12 @@ import (
 	"github.com/grafov/m3u8"
 )
 
+// StreamExtracter is a simple interface for ExtractStreamUrl
 type StreamExtracter interface {
 	ExtractStreamUrl(name string) ([]HLSStream, error)
 }
 
+// ExtractStreamUrl returns the lists of urls for each stream quality
 func (s Session) ExtractStreamUrl(name string) ([]HLSStream, error) {
 
 	data, _ := s.getHLSAccessToken(name, "https://api.twitch.tv/api/channels/")
@@ -23,6 +25,14 @@ func (s Session) ExtractStreamUrl(name string) ([]HLSStream, error) {
 	pl := parsePlaylist(playlist)
 
 	return pl, nil
+}
+
+// HLSStream shows information about a stream, URL is curl to an M3U6 playlist
+type HLSStream struct {
+	URL        string
+	Quality    string
+	Resolution string
+	Bitrate    uint32
 }
 
 type accessToken struct {
@@ -74,13 +84,6 @@ func getChannelM3U8Playlist(channel string, at accessToken, url string) io.Reade
 	req, _ := http.NewRequest("GET", reqUrl, nil)
 	ret, _ := client.Do(req)
 	return ret.Body
-}
-
-type HLSStream struct {
-	URL        string
-	Quality    string
-	Resolution string
-	Bitrate    uint32
 }
 
 func parsePlaylist(pl io.Reader) []HLSStream {

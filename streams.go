@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// StreamList is the list of stream outputed by GetStream
 type StreamList struct {
 	Data []Stream `json:"data"`
 }
@@ -21,6 +22,7 @@ type Stream struct {
 	ThumbnailURL string    `json:"thumbnail_url"`
 }
 
+// GetStreamInput adds filters to the GetStream function see GetStream for more information
 type GetStreamInput struct {
 	After       string `url:"after,omitempty"`
 	Before      string `url:"before,omitempty"`
@@ -33,12 +35,13 @@ type GetStreamInput struct {
 	UserLogin   string `url:"user_login,omitempty"`
 }
 
+// GetStreamer is a simple interface for the GetStream function
 type GetStreamer interface {
 	GetStream(input GetStreamInput) (StreamList, error)
 }
 
-// Returns a list of Streams
-// reference https://dev.twitch.tv/docs/api/reference#get-streams
+/* GetStream returns a list of Streams
+reference : https://dev.twitch.tv/docs/api/reference#get-streams */
 func (s Session) GetStream(input GetStreamInput) (StreamList, error) {
 	var out StreamList
 	err := s.doRequest("/streams", &input, &out)

@@ -9,6 +9,7 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// Interface for the whole lib
 type Interface interface {
 	GetStreamer
 	StreamExtracter
