@@ -5,7 +5,6 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"os"
 
 	"github.com/google/go-querystring/query"
 )
@@ -22,8 +21,7 @@ type Session struct {
 }
 
 // NewSession creates a new Twitch Session
-func NewSession() Session {
-	clientID := os.Getenv("CLIENT_ID")
+func NewSession(clientID string) Session {
 	return Session{"https://api.twitch.tv/helix", clientID}
 }
 
