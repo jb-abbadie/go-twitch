@@ -27,18 +27,12 @@ func NewSession(clientID string) Session {
 
 func (s *Session) doRequest(path string, q interface{}, r interface{}) error {
 
+	req, err := s.buildTwitchReq("GET", path, q)
+	if err != nil {
+		return err
+	}
+
 	client := new(http.Client)
-	reqURL, err := buildURL(s.BaseURL, path, q)
-	if err != nil {
-		return err
-	}
-	req, err := http.NewRequest("GET", reqURL, nil)
-	if err != nil {
-		return err
-	}
-
-	req.Header.Add("Client-ID", s.ClientID)
-
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
@@ -46,6 +40,24 @@ func (s *Session) doRequest(path string, q interface{}, r interface{}) error {
 	if resp.StatusCode != 200 {
 		return errors.New("Failed request " + resp.Status)
 	}
+	return parseJSON(*resp, r)
+}
+
+func (s *Session) buildTwitchReq(method string, path string, q interface{}) (*http.Request, error) {
+	reqURL, err := buildURL(s.BaseURL, path, q)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("GET", reqURL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Client-ID", s.ClientID)
+	return req, nil
+}
+
+func parseJSON(resp http.Response, r interface{}) error {
 	out, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return err
