@@ -73,10 +73,10 @@ func getChannelM3U8Playlist(channel string, at accessToken, url string) io.Reade
 	client := new(http.Client)
 
 	options := getChannelOptions{
-		rand.Intn(999999),
-		true,
-		at.Token,
-		at.Sig,
+		P:           rand.Intn(999999),
+		AllowSource: true,
+		Token:       at.Token,
+		Sig:         at.Sig,
 	}
 	v, _ := query.Values(options)
 
