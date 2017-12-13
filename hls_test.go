@@ -23,10 +23,7 @@ func TestGetHLSAccessToken(t *testing.T) {
 }
 
 func TestGetChannelM3UPlaylist(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assert.Contains(t, r.RequestURI, "/twitch.m3u8")
-		fmt.Fprintln(w, "{}")
-	}))
+	ts := emptyHTTPServer(t, "/twitch.m3u8?allow_source=true&p=499379&sig=&token=")
 	defer ts.Close()
 
 	getChannelM3U8Playlist("twitch", accessToken{}, ts.URL+"/")

@@ -3,19 +3,24 @@ package twitch
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
-func TestGetStreamsOptions(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assert.Equal(t, r.RequestURI, "/streams?after=125")
+func emptyHTTPServer(t *testing.T, path string) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, path, r.RequestURI)
 		fmt.Fprintln(w, "{}")
 	}))
+}
 
+func TestGetStreamsOptions(t *testing.T) {
+
+	ts := emptyHTTPServer(t, "/streams?after=125")
 	defer ts.Close()
 
 	testSession := Session{ts.URL, ""}
