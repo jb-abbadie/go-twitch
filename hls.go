@@ -2,7 +2,6 @@ package twitch
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -102,6 +101,5 @@ func parsePlaylist(pl io.Reader) []HLSStream {
 			variants[i].Bandwidth,
 		}
 	}
-	fmt.Println("=====================")
 	return out
 }
