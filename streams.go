@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// StreamList is the list of stream outputed by GetStream
+// StreamList is the list of stream outputted by GetStream
 type StreamList struct {
 	Data []Stream `json:"data"`
 }
