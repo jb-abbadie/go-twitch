@@ -1,8 +1,8 @@
 # go-twitch
 
 [![Build Status](https://travis-ci.org/grsakea/go-twitch.svg?branch=master)](https://travis-ci.org/grsakea/go-twitch)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/49c42930bc37347f005c/test_coverage)](https://codeclimate.com/github/grsakea/go-twitch/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/49c42930bc37347f005c/maintainability)](https://codeclimate.com/github/grsakea/go-twitch/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/grsakea/go-twitch/badge.svg?branch=master)](https://coveralls.io/github/grsakea/go-twitch?branch=master)
+[![GoDoc](https://godoc.org/github.com/grsakea/go-twitch?status.svg)](https://godoc.org/github.com/grsakea/go-twitch)
 
 Go library for accessing the [new twitch API](https://dev.twitch.tv/docs/api)
 
