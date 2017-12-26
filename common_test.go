@@ -2,6 +2,9 @@ package twitch
 
 import (
 	"errors"
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -17,8 +20,7 @@ func TestNewSession(t *testing.T) {
 }
 
 func TestImplementInterface(t *testing.T) {
-	var twitch Interface = (*Session)(nil)
-	t.Log(twitch)
+	assert.Implements(t, (*Interface)(nil), new(Session))
 }
 
 type readf func(p []byte) (n int, err error)
@@ -60,4 +62,40 @@ func TestBuildTwitchReqFailDuringHTTPreq(t *testing.T) {
 	s := Session{}
 	_, err := s.buildTwitchReq("", "%zzzz", GetUserInput{})
 	assert.Contains(t, err.Error(), "parse %zzzz: invalid URL escape ")
+}
+
+func TestBuildDoRequestFailBuild(t *testing.T) {
+	s := Session{}
+	err := s.doRequest("%zzzz", nil, nil)
+	assert.Contains(t, err.Error(), "parse")
+}
+
+func TestDoRequestInvalidJSON(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "{")
+	}))
+	defer ts.Close()
+	s := Session{}
+	err := s.doRequest(ts.URL, nil, nil)
+	assert.Contains(t, err.Error(), "JSON input")
+}
+
+func TestDoRequestInvalidResponseCode(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(120)
+	}))
+	defer ts.Close()
+	s := Session{}
+	err := s.doRequest(ts.URL, nil, nil)
+	assert.Contains(t, err.Error(), "status code 120")
+}
+
+func TestDoRequestInvalidHTTPResponse(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(301)
+	}))
+	defer ts.Close()
+	s := Session{}
+	err := s.doRequest(ts.URL, nil, nil)
+	assert.Contains(t, err.Error(), "301 response missing Location header")
 }
