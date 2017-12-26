@@ -3,6 +3,7 @@ package twitch
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"io/ioutil"
 	"net/http"
 
@@ -41,7 +42,7 @@ func (s *Session) doRequest(path string, q interface{}, r interface{}) error {
 	if resp.StatusCode != 200 {
 		return errors.New("Failed request " + resp.Status)
 	}
-	return parseJSON(*resp, r)
+	return parseJSON(resp.Body, r)
 }
 
 func (s *Session) buildTwitchReq(method string, path string, q interface{}) (*http.Request, error) {
@@ -58,8 +59,8 @@ func (s *Session) buildTwitchReq(method string, path string, q interface{}) (*ht
 	return req, nil
 }
 
-func parseJSON(resp http.Response, r interface{}) error {
-	out, err := ioutil.ReadAll(resp.Body)
+func parseJSON(resp io.Reader, r interface{}) error {
+	out, err := ioutil.ReadAll(resp)
 	if err != nil {
 		return err
 	}
