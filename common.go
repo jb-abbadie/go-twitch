@@ -50,7 +50,7 @@ func (s *Session) buildTwitchReq(method string, path string, q interface{}) (*ht
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequest("GET", reqURL, nil)
+	req, err := http.NewRequest(method, reqURL, nil)
 	if err != nil {
 		return nil, err
 	}
