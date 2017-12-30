@@ -1,6 +1,6 @@
 package twitch
 
-// StreamList is the list of users outputted by GetStream
+// UserList is the list of users outputted by GetStream
 type UserList struct {
 	Data []Stream `json:"data"`
 }
@@ -25,6 +25,7 @@ type GetUserInput struct {
 	Login string `url:"login,omitempty"`
 }
 
+// GetUser returns a list of twitch user https://dev.twitch.tv/docs/api/reference#get-users
 func (s Session) GetUser(input GetUserInput) (UserList, error) {
 	var out UserList
 	err := s.doRequest("/users", &input, &out)

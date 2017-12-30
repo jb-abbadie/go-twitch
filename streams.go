@@ -9,6 +9,7 @@ type StreamList struct {
 	Data []Stream `json:"data"`
 }
 
+// Stream is a livestream on Twitch
 type Stream struct {
 	ID           string    `json:"id"`
 	UserID       string    `json:"user_id"`
@@ -26,7 +27,7 @@ type Stream struct {
 type GetStreamInput struct {
 	After       string `url:"after,omitempty"`
 	Before      string `url:"before,omitempty"`
-	CommunityId string `url:"community_id,omitempty"`
+	CommunityID string `url:"community_id,omitempty"`
 	First       int    `url:"first,omitempty"`
 	GameID      string `url:"game_id,omitempty"`
 	Language    string `url:"language,omitempty"`
@@ -40,8 +41,7 @@ type GetStreamer interface {
 	GetStream(input GetStreamInput) (StreamList, error)
 }
 
-/* GetStream returns a list of Streams
-reference : https://dev.twitch.tv/docs/api/reference#get-streams */
+// GetStream returns a list of Streams reference : https://dev.twitch.tv/docs/api/reference#get-streams
 func (s Session) GetStream(input GetStreamInput) (StreamList, error) {
 	var out StreamList
 	err := s.doRequest("/streams", &input, &out)

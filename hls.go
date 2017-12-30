@@ -79,8 +79,8 @@ func getChannelM3U8Playlist(channel string, at accessToken, url string) io.Reade
 	}
 	v, _ := query.Values(options)
 
-	reqUrl := url + channel + ".m3u8?" + v.Encode()
-	req, _ := http.NewRequest("GET", reqUrl, nil)
+	reqURL := url + channel + ".m3u8?" + v.Encode()
+	req, _ := http.NewRequest("GET", reqURL, nil)
 	ret, _ := client.Do(req)
 	return ret.Body
 }
