@@ -30,7 +30,7 @@ func (s Session) GetUser(input GetUserInput) (UserList, error) {
 	var out UserList
 	err := s.doRequest("/users", &input, &out)
 	if err != nil {
-		return UserList{}, nil
+		return UserList{}, err
 	}
 	return out, nil
 }
