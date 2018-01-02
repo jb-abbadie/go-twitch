@@ -6,7 +6,8 @@ import (
 
 // StreamList is the list of stream outputted by GetStream
 type StreamList struct {
-	Data []Stream `json:"data"`
+	Data []Stream   `json:"data"`
+	Page Pagination `json:"pagination"`
 }
 
 // Stream is a livestream on Twitch

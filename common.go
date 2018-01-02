@@ -22,6 +22,11 @@ type Session struct {
 	ClientID string
 }
 
+// Pagination contains the cursor used for paginated results
+type Pagination struct {
+	Cursor string `json:"cursor"`
+}
+
 // NewSession creates a new Twitch Session
 func NewSession(clientID string) Session {
 	return Session{"https://api.twitch.tv/helix", clientID}

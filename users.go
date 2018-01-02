@@ -2,7 +2,8 @@ package twitch
 
 // UserList is the list of users outputted by GetStream
 type UserList struct {
-	Data []Stream `json:"data"`
+	Data []Stream   `json:"data"`
+	Page Pagination `json:"pagination"`
 }
 
 // User is a twitch User
