@@ -14,3 +14,16 @@ func TestGetUserOptions(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestGetUserOptionsFail(t *testing.T) {
+	ts := forbiddenHTTPServer(t, "/users")
+	defer ts.Close()
+
+	testSession := Session{BaseURL: ts.URL}
+	input := GetUserInput{}
+
+	_, err := testSession.GetUser(input)
+	if err == nil {
+		t.Error(err)
+	}
+}

@@ -18,6 +18,13 @@ func emptyHTTPServer(t *testing.T, path string) *httptest.Server {
 	}))
 }
 
+func forbiddenHTTPServer(t *testing.T, path string) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, path, r.RequestURI)
+		w.WriteHeader(203)
+	}))
+}
+
 func TestGetStreamsOptions(t *testing.T) {
 
 	ts := emptyHTTPServer(t, "/streams?after=125")
@@ -67,4 +74,17 @@ func TestGetStreamsParseJSON(t *testing.T) {
 		t.Error("error parsing stream")
 	}
 	assert.Equal(t, data, fakeStream)
+}
+
+func TestGetStreamsFail(t *testing.T) {
+	ts := forbiddenHTTPServer(t, "/streams")
+	defer ts.Close()
+
+	testSession := Session{BaseURL: ts.URL}
+	input := GetStreamInput{}
+
+	_, err := testSession.GetStream(input)
+	if err == nil {
+		t.Error(err)
+	}
 }
