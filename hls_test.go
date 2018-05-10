@@ -34,7 +34,7 @@ func TestParsePlaylist(t *testing.T) {
 	pl.Append("test", &m3u8.MediaPlaylist{}, m3u8.VariantParams{})
 	pl.Append("test2", &m3u8.MediaPlaylist{}, m3u8.VariantParams{})
 
-	out := parsePlaylist(pl.Encode())
+	out, _ := parsePlaylist(pl.Encode())
 
 	if out[0].URL != "test" || out[1].URL != "test2" {
 		t.Fatal("Failed parsing playlist")

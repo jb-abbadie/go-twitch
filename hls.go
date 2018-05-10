@@ -21,9 +21,9 @@ func (s Session) ExtractStreamUrl(name string) ([]HLSStream, error) {
 
 	data, _ := s.getHLSAccessToken(name, "https://api.twitch.tv/api/channels/")
 	playlist := getChannelM3U8Playlist(name, data, "https://usher.ttvnw.net/api/channel/hls/")
-	pl := parsePlaylist(playlist)
+	pl, err := parsePlaylist(playlist)
 
-	return pl, nil
+	return pl, err
 }
 
 // HLSStream shows information about a stream, URL is curl to an M3U6 playlist
@@ -85,10 +85,10 @@ func getChannelM3U8Playlist(channel string, at accessToken, url string) io.Reade
 	return ret.Body
 }
 
-func parsePlaylist(pl io.Reader) []HLSStream {
+func parsePlaylist(pl io.Reader) ([]HLSStream, error) {
 	p, _, err := m3u8.DecodeFrom(pl, true)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	variants := p.(*m3u8.MasterPlaylist).Variants
@@ -101,5 +101,5 @@ func parsePlaylist(pl io.Reader) []HLSStream {
 			variants[i].Bandwidth,
 		}
 	}
-	return out
+	return out, nil
 }
